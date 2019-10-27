@@ -8,8 +8,11 @@ bot.on('ready', () => {
 });
 
 bot.on('message', msg => {
-  if(msg.content === "gorilla") {
-    msg.reply(`i'm here`);
+  if(msg.content.toLowerCase() === "gorilla") {
+    msg.channel.sendMessage('I think you meant scalene');
+  } else if(msg.content.substring(0, 1) === prefix) {
+    const args = msg.substring(prefix.length).split(' ');
+    if 
   }
 });
 
