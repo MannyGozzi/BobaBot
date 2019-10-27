@@ -10,9 +10,17 @@ bot.on('ready', () => {
 bot.on('message', msg => {
   if(msg.content.toLowerCase() === "gorilla") {
     msg.channel.sendMessage('I think you meant scalene');
-  } else if(msg.content.substring(0, 1) === prefix) {
-    const args = msg.substring(prefix.length).split(' ');
-    if 
+  } 
+  else if(msg.content.substring(0, 1) === prefix) {
+    const args = msg.content.substring(prefix.length).split(' ');
+    switch(args[0]) {
+      case 'info':
+        msg.channel.sendMessage(
+          '\tDev:    Noctua\n' + 
+          '\tAge:    17\n' + 
+          '\tSex:    Male\n'
+        );
+    }
   }
 });
 
