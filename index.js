@@ -1,13 +1,18 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const token = 'NjM4MTI4MzM1NTUzMTY3NDM4.XbYOcw.gAzcv9laiy2wjcfDRw6fEElC4MA';
-const botName = 'GorillBot';
+const botName = 'GorillaBot';
 const botVersion = '1.0.0';
 const dev = {
   name: 'Noctua',
   age: 17,
   gender: 'Whale'
 };
+
+
+
+// FUNCTIONALITY
+const prefix = '!';
 
 bot.on('ready', () => {
   console.log('GorillaBot is online')
@@ -24,11 +29,16 @@ bot.on('message', msg => {
         msg.channel.sendMessage(
           `===================
           Version: ${botVersion}
-          Name: ${dev.name}
+          Name: ${botName}
           Dev: ${dev.name}
           Age: ${dev.age}
           Gender: ${dev.gender}
           `);
+        break;
+      case 'clear':
+        if(!args[1]) return msg.channel.sendMessage('Please specify # of messages to delete');
+        msg.channel.bulkDelete(args[1]);
+        break;
     }
   }
 });
