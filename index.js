@@ -1,7 +1,13 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const token = 'NjM4MTI4MzM1NTUzMTY3NDM4.XbYOcw.gAzcv9laiy2wjcfDRw6fEElC4MA';
-const prefix = '!';
+const botName = 'GorillBot';
+const botVersion = '1.0.0';
+const dev = {
+  name: 'Noctua',
+  age: 17,
+  gender: 'Whale'
+};
 
 bot.on('ready', () => {
   console.log('GorillaBot is online')
@@ -16,10 +22,13 @@ bot.on('message', msg => {
     switch(args[0]) {
       case 'info':
         msg.channel.sendMessage(
-          '\tDev:    Noctua\n' + 
-          '\tAge:    17\n' + 
-          '\tSex:    Male\n'
-        );
+          `===================
+          Version: ${botVersion}
+          Name: ${dev.name}
+          Dev: ${dev.name}
+          Age: ${dev.age}
+          Gender: ${dev.gender}
+          `);
     }
   }
 });
