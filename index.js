@@ -14,7 +14,7 @@ bot.on('ready', () => {
 
 bot.on('message', msg => {
   if(msg.content.toLowerCase() === "gorilla") {
-    msg.channel.sendMessage('I think you meant scalene');
+    msg.channel.sendMessage('I think what you meant to say was **scalene**');
   } else if(msg.content.substring(0, 1) === Constants.prefix) {
     const args = msg.content.substring(Constants.prefix.length).split(' ');
     switch(args[0]) {
