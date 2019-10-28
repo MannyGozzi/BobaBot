@@ -2,17 +2,8 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const token = 'NjM4MTI4MzM1NTUzMTY3NDM4.XbYOcw.gAzcv9laiy2wjcfDRw6fEElC4MA';
-const botName = 'GorillaBot';
-const botVersion = '1.0.0';
-const dev = {
-  name: 'Noctua',
-  age: 17,
-  gender: 'Whale'
-};
 
 const handleInfo = require('./Handle_Info.js');
-
-
 
 // FUNCTIONALITY
 const prefix = '!';
