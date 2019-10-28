@@ -8,3 +8,5 @@ module.exports.dev = {
   age: 17,
   gender: 'Whale'
 };
+
+module.exports.prefix = '!';
