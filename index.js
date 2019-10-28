@@ -9,6 +9,8 @@ const dev = {
   gender: 'Whale'
 };
 
+import handleInfo from 'Handle_Info';
+
 
 
 // FUNCTIONALITY
