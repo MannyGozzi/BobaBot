@@ -1,5 +1,3 @@
-# Simple Discord Bot
-
 # Available Commands
 
 # !info
@@ -7,7 +5,7 @@
 
 # !clear [num]
   - clears num messages
-  - LIMIT: num must be less than total messages in chat or <= 100
+  - num must be less than total messages in chat or <= 100
 
 # !something
 
