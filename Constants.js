@@ -1,10 +1,10 @@
 module.exports.bot = {
-  name: 'GorillaBot',
+  name: 'Soren',
   version: '1.0.0'
 }
 
 module.exports.dev = {
-  name: 'Noctua',
+  name: 'Liber_Noctua',
   age: 17,
   gender: 'Whale'
 };
