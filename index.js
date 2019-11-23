@@ -8,7 +8,7 @@ const Constants = require('./Constants.js');
 
 // FUNCTIONALITY
 bot.on('ready', () => {
-  console.log('GorillaBot is online')
+  console.log(`${Constants.bot.name} is online`);
 });
 
 

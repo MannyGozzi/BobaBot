@@ -3,14 +3,17 @@
 # Available Commands
 
 # !info
+  - returns info about bot
 
-  - ## info
+# !clear [num]
+  - clears num messages
+  - LIMIT: num must be less than total messages in chat or <= 100
+
+# !something
+
+  - ## somethingelse
     - returns info about bot
-  - ## dev
-    - returns info about dev
-  - ## version
-    - returns bot version
-
+    
 # !something
 
   - ## somethingelse
