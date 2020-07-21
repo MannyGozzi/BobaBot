@@ -4,9 +4,9 @@ module.exports.bot = {
 }
 
 module.exports.dev = {
-  name: 'Liber_Noctua',
-  age: 17,
-  gender: 'Whale'
+  name: 'Manny Gozzi',
+  age: 18,
+  species: 'Owl',
 };
 
 module.exports.prefix = '!';
