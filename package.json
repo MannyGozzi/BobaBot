@@ -1,28 +1,27 @@
 {
   "//1": "describes your app and its dependencies",
   "//2": "https://docs.npmjs.com/files/package.json",
-  "name": "hello-discord",
+  "name": "boba-bot",
   "version": "0.0.1",
-  "description": "A simple Discord bot",
-  "homepage": "https://glitch.com/@MannyGozzi",
+  "description": "View voice duration for each user",
+  "homepage": "https://manuelgozzi.com",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.16.4",
-    "discord.js": "^11.5.1"
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
   },
   "engines": {
-    "node": "8.x"
+    "node": "18.*"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/hello-express"
+    "url": ""
   },
-  "license": "MIT",
   "keywords": [
     "node",
-    "glitch",
     "express"
   ]
 }
