@@ -5,6 +5,7 @@
 /bin/*
 /node_modules/*
 storage/
+audio/
 
 config.json
 database.json
