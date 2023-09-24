@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { createAudioPlayer, NoSubscriberBehavior } = require('@discordjs/voice');
-const { createAudioResource, StreamType } = require('@discordjs/voice');
+const { createAudioResource } = require('@discordjs/voice');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const fs = require('node:fs');
 const ytdl = require('ytdl-core');
