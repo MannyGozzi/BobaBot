@@ -28,6 +28,7 @@ const client = new Client({ 	intents: [
   GatewayIntentBits.GuildMessages,
   GatewayIntentBits.MessageContent,
   GatewayIntentBits.GuildMembers,
+  GatewayIntentBits.GuildVoiceStates,
 ], });
 
 client.commands = new Collection();
