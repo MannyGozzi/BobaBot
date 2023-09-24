@@ -1,1 +1,2 @@
-# Available Commands
+# To deploy
+- yarn start

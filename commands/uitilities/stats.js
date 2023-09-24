@@ -2,9 +2,10 @@ const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('help')
-        .setDescription('help'),
+        .setName('stats')
+        .setDescription('show user stats'),
     async execute(interaction) {
-        await interaction.reply('view all available commands');
+        await interaction.reply(`
+        user stats show here`);
     },
 };
