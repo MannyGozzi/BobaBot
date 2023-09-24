@@ -2,8 +2,8 @@ const { SlashCommandBuilder } = require('discord.js');
 const { joinVoiceChannel, createAudioPlayer, AudioPlayerStatus, createAudioResource, NoSubscriberBehavior } = require('@discordjs/voice');
 const fs = require('node:fs');
 const path = require('node:path');
-const { downloadPath } = require('./config.json');
 const ytdl = require('ytdl-core');
+const { audioPath } = require('../../config.json');
 const queue = [];
 let lastInteraction = null;
 let playing = false;
@@ -66,7 +66,7 @@ async function nextSong() {
 
             connection.subscribe(player);
             player.play(resource);
-            lastInteraction.followUp({ content: `**Now playing**\t\t${songId}`, ephemeral: false });
+            lastInteraction.followUp({ content: `**Now playing**\t\t\t${songId}`, ephemeral: false });
         });
     });
 }
@@ -83,8 +83,17 @@ player.on(AudioPlayerStatus.Idle, () => {
 })
 
 
-async function clearDownloadedSongs() {
-    for (const file of await fs.readdir(directory)) {
-        await fs.unlink(path.join(directory, file));
-    }
-}
+function clearDownloadedSongs() {
+    fs.readdir(audioPath, (err, files) => {
+      if (err) {
+        console.error('Error reading directory:', err);
+        return;
+      }
+      files.forEach(file => {
+        const filePath = path.join(audioPath, file);
+        fs.unlink(filePath, err => {
+          if (err) console.error('Error deleting file:', err);
+        });
+      });
+    });
+  }
