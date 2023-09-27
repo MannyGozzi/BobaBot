@@ -7,10 +7,12 @@ module.exports = {
     async execute(interaction) {
         await interaction.reply(`
         **Commands**
-        /help - help
-        /ping - ping
-        /server - server
-        /user - user
-        /stats - display user stats`);
+        /play [ youtube-url ]
+        /skip
+        /stop
+        /pausetoggle
+        /stats
+        /help
+        `);
     },
 };
