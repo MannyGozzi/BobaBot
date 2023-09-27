@@ -36,7 +36,7 @@ module.exports = {
             .setColor("Red")
             .setTitle("Failed to add to queue")
             .setDescription("This usually happens with age restricted content")
-            await interaction.editReply({embeds: [embedError]});
+            await interaction.editReply({embeds: [embedError]}, {ephemeral: true});
             return;
         }
         queue.push(songId);
@@ -56,19 +56,19 @@ module.exports = {
             const embed = new EmbedBuilder ()
                 .setColor("White")
                 .setTitle("Skipping")
-            await interaction.reply({embeds: [embed]});
+            await interaction.reply({embeds: [embed]}, {ephemeral: true});
         } else if (queue.length === 0 && player.state.status === AudioPlayerStatus.Playing) {
             queue.length = 0;
             player.stop();
             const embed = new EmbedBuilder ()
                 .setColor("White")
                 .setTitle("Skipping")
-            await interaction.reply({embeds: [embed]});
+            await interaction.reply({embeds: [embed]}, {ephemeral: true});
         } else {
             const embed = new EmbedBuilder ()
                 .setColor("Red")
                 .setTitle("Nothing to skip")
-            await interaction.reply({embeds: [embed]});
+            await interaction.reply({embeds: [embed]}, {ephemeral: true});
         }
     },
     async stopSong() {
