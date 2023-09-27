@@ -43,6 +43,7 @@ module.exports = {
         if (player.state.status !== 'playing') {
             await nextSong();
         }
+        //const songDetails = await getVideoAttributes(songId);
         const embed = new EmbedBuilder ()
             .setColor("White")
             .setTitle("Adding to queue")
@@ -96,6 +97,16 @@ async function getVideoTitle(url) {
     }
     return "";
 }
+
+// async function getVideoAttributes(url) {
+//     try {
+//         const info = await ytdl.getInfo(url);
+//         return info.videoDetails;
+//     } catch (err) {
+//         console.error('Error getting video attributes:', err.message);
+//         return null;
+//     }
+// }
 
 async function nextSong() {
     clearDownloadedSongs();
