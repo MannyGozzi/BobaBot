@@ -5,6 +5,7 @@ const { token, apiKey } = require('./config.json');
 
 // Import the functions you need from the SDKs you need
 const firebase = require("firebase/app");
+const { BUTTON_PREFIX } = require('./constants.js');
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -51,31 +52,49 @@ for (const folder of commandFolders) {
 
 
 client.once(Events.ClientReady, () => {
-	console.log('Ready!');
-});
-
-
-client.on('message', msg => {
-  console.log('logged in as user');
+	console.log('Bot Online 🔥');
 });
 
 client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return;
 
-	const command = client.commands.get(interaction.commandName);
-
-	if (!command) return;
-
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-		} else {
-			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	if (interaction.isButton()) {
+		switch (interaction.customId) {
+			case `${BUTTON_PREFIX}skip`:
+				const skipSong = require('./buttonCommands/skipButton.js').execute;
+				skipSong(interaction);
+				break;
+			case `${BUTTON_PREFIX}pause`:
+				const pauseSong = require('./buttonCommands/pausetoggleButton.js').execute;
+				pauseSong(interaction);
+				break;
+			case `${BUTTON_PREFIX}stop`:
+				const stopSong = require('./buttonCommands/stopButton.js').execute;
+				stopSong(interaction);
+				break;
+			default:
+				break;
 		}
 	}
+
+	if (interaction.isChatInputCommand()) {
+
+		const command = client.commands.get(interaction.commandName);
+
+		if (!command) return;
+
+		try {
+			await command.execute(interaction);
+		} catch (error) {
+			console.error(error);
+			if (interaction.replied || interaction.deferred) {
+				await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+			} else {
+				await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+			}
+		}
+	}
+
+	return;
 });
 
 client.login(token);

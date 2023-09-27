@@ -1,14 +1,14 @@
-const { SlashCommandBuilder, SelectMenuOptionBuilder } = require('discord.js');
+const { SlashCommandBuilder, ButtonBuilder, EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { joinVoiceChannel, createAudioPlayer, AudioPlayerStatus, createAudioResource, NoSubscriberBehavior, getVoiceConnection } = require('@discordjs/voice');
 const fs = require('node:fs');
 const path = require('node:path');
 const ytdl = require('ytdl-core');
 const { audioPath } = require('../../config.json');
-const { EmbedBuilder  } = require('discord.js');
 const { get } = require('node:http');
 const queue = [];
 let nextSongAvailable = false;
 let lastInteraction = null;
+const { BUTTON_PREFIX } = require('../../constants.js');
 
 const player = createAudioPlayer({
     behaviors: {
@@ -48,7 +48,7 @@ module.exports = {
             .setColor("White")
             .setTitle("Adding to queue")
             .setDescription(videoTitle)
-        await interaction.editReply({embeds: [embed]});
+        await interaction.editReply({embeds: [embed], components: [getPlayerControls()]});
     },
     async skipSong(interaction) {
         if (queue.length > 0) {
@@ -160,4 +160,22 @@ function clearDownloadedSongs() {
         });
       });
     });
+}
+
+function getPlayerControls() {
+    const pauseToggleButton = new ButtonBuilder()
+            .setCustomId(`${BUTTON_PREFIX}pause`)
+            .setLabel('⏸')
+            .setStyle('Primary');
+    const stopButton = new ButtonBuilder()
+        .setCustomId(`${BUTTON_PREFIX}stop`)
+        .setLabel('⏹')
+        .setStyle('Primary');
+    const skipButton = new ButtonBuilder()
+        .setCustomId(`${BUTTON_PREFIX}skip`)
+        .setLabel('⏵')
+        .setStyle('Primary');
+    const row = new ActionRowBuilder()
+        .addComponents(stopButton, pauseToggleButton, skipButton);
+    return row
 }
