@@ -1,12 +1,12 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { joinVoiceChannel, createAudioPlayer, AudioPlayerStatus, createAudioResource, NoSubscriberBehavior } = require('@discordjs/voice');
+const { SlashCommandBuilder, SelectMenuOptionBuilder } = require('discord.js');
+const { joinVoiceChannel, createAudioPlayer, AudioPlayerStatus, createAudioResource, NoSubscriberBehavior, getVoiceConnection } = require('@discordjs/voice');
 const fs = require('node:fs');
 const path = require('node:path');
 const ytdl = require('ytdl-core');
 const { audioPath } = require('../../config.json');
 const queue = [];
+let nextSongAvailable = false;
 let lastInteraction = null;
-let playing = false;
 
 const player = createAudioPlayer({
     behaviors: {
@@ -24,34 +24,49 @@ module.exports = {
                 .setRequired(true)),
     async execute(interaction) {       
         const url = interaction.options.getString('url');
-        const songId = extractVideoId(url);
+        const songId = getVideoId(url);
         lastInteraction = interaction;
         queue.push(songId);
+        player.unpause();
         interaction.deferReply();
-        if (!playing) {
+        if (player.state.status !== 'playing') {
             await nextSong();
-            playing = true;
         }
-        await interaction.editReply(`**Adding to queue\t**${await getVideoId(songId)}`)
+        await interaction.editReply(`**Adding to queue\t**${await getVideoTitle(songId)}`)
     },
+    async skipSong(interaction) {
+        if (queue.length > 0) {
+            await nextSong();
+            await interaction.reply('**Skipping**')
+        } else if (queue.length === 0 && player.state.status === AudioPlayerStatus.Playing) {
+            queue.length = 0;
+            player.stop();
+            await interaction.reply('**Skipping**')
+        } else {
+            await interaction.reply('**Nothing to skip**')
+        }
+    },
+    async stopSong() {
+        queue.length = 0;
+        player.stop();
+    }
 };
 
-function extractVideoId(url) {
+function getVideoId(url) {
     const match = url.match(/([a-zA-Z0-9_-]{11})/);
     return match ? match[1] : null;
 }
 
-async function getVideoId(url) {
+async function getVideoTitle(url) {
     const title = await ytdl.getInfo(url).then(info => info.videoDetails.title);
     return title
 }
 
 async function nextSong() {
-    await clearDownloadedSongs();
+    clearDownloadedSongs();
     const url = queue.shift();
     ytdl.getInfo(url).then(info => {
         const songId = info.videoDetails.title;
-
         // start downloading then reference the resource
         ytdl(url).pipe(fs.createWriteStream(`./audio/${songId}.mp3`)).on('finish', () => {
 
@@ -67,17 +82,18 @@ async function nextSong() {
             connection.subscribe(player);
             player.play(resource);
             lastInteraction.followUp({ content: `**Now playing**\t\t\t${songId}`, ephemeral: false });
+            nextSongAvailable = queue.length !== 0
         });
+    }).catch(err => {
+        console.log(err);
+        lastInteraction.followUp({ content: `**Error retrieving video: **\t\t\t${err}`, ephemeral: true });
     });
 }
 
 player.on(AudioPlayerStatus.Idle, () => {
-    playing = false;
-    if (queue.length > 0 && lastInteraction) {
-        playing = true;
+    if (player.state.status === AudioPlayerStatus.Idle && queue.length > 0 && lastInteraction) {
         nextSong();
-    } else if(lastInteraction && playing === false) {
-        playing = false;
+    } else if(lastInteraction && !nextSongAvailable) {
         lastInteraction.followUp({ content: '**Queue empty**', ephemeral: true });
     }
 })
@@ -96,4 +112,4 @@ function clearDownloadedSongs() {
         });
       });
     });
-  }
+}
