@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { getVoiceConnection } = require('@discordjs/voice');
+const { EmbedBuilder  } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,10 +16,16 @@ module.exports = {
             await interaction.reply('**Not in a voice channel**');
         } else if (player.state.status === 'paused') {
             player.unpause();
-            await interaction.reply(`**Resuming**`);
+            const embed = new EmbedBuilder ()
+                .setColor("Green")
+                .setTitle("Resuming")
+            await interaction.reply({embeds: [embed]});
         } else {
             player.pause();
-            await interaction.reply(`**Pausing**`);
+            const embed = new EmbedBuilder ()
+                .setColor("White")
+                .setTitle("Pausing")
+            await interaction.reply({embeds: [embed]});
         }
     },
 };
